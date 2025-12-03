@@ -164,7 +164,7 @@ qshape prints Postfix queue domain and age distribution.
 %if %{PFLOGSUMM}
 gzip -dc %{SOURCE53} | tar xf -
 pushd pflogsumm-%{pflogsumm_ver}
-%patch9 -p1 -b .datecalc
+%patch -P 9 -p1 -b .datecalc
 popd
 %endif
 %patch -P 10 -p1 -b .CVE-2011-0411
