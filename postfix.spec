@@ -79,6 +79,7 @@ Patch11: postfix-2.6.6-CVE-2011-1720.patch
 Patch12: postfix-2.6.6-long-size-limits.patch
 Patch13: postfix-2.6.6-add-tlsv11-2.patch
 Patch14: postfix-2.6.6-preserve-timestamps.patch
+Patch15: postfix-makedefs.patch
 
 # Optional patches - set the appropriate environment variables to include
 #                    them when building the package/spec file
@@ -155,10 +156,10 @@ qshape prints Postfix queue domain and age distribution.
 %prep
 %setup -q
 # Apply obligatory patches
-%patch1 -p1 -b .config
-%patch2 -p1 -b .files
-%patch3 -p1 -b .alternatives
-%patch8 -p1 -b .large-fs
+%patch -P 1 -p1 -b .config
+%patch -P 2 -p1 -b .files
+%patch -P 3 -p1 -b .alternatives
+%patch -P 8 -p1 -b .large-fs
 
 %if %{PFLOGSUMM}
 gzip -dc %{SOURCE53} | tar xf -
@@ -166,11 +167,13 @@ pushd pflogsumm-%{pflogsumm_ver}
 %patch9 -p1 -b .datecalc
 popd
 %endif
-%patch10 -p1 -b .CVE-2011-0411
-%patch11 -p1 -b .CVE-2011-1720
-%patch12 -p1 -b .long-size-limits
-%patch13 -p1 -b .add-tlsv11-2
-%patch14 -p1 -b .preserve-timestamps
+%patch -P 10 -p1 -b .CVE-2011-0411
+%patch -P 11 -p1 -b .CVE-2011-1720
+%patch -P 12 -p1 -b .long-size-limits
+%patch -P 13 -p1 -b .add-tlsv11-2
+%patch -P 14 -p1 -b .preserve-timestamps
+rm -f makedefs
+%patch -P 15 -p1
 
 for f in README_FILES/TLS_{LEGACY_,}README; do
 	iconv -f iso8859-1 -t utf8 -o ${f}{_,} &&
